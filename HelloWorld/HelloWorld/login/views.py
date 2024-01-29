@@ -136,12 +136,14 @@ def delete_post(request):
     # 根据id列表批量删除数据
     mod = models.Project.objects
     # 获取前端传来的id数组
-    idlist = request.GET.getlist('ids[]')
+    namelist = request.GET.getlist('names[]')
     try:
         # 遍历id数组
-        for id in idlist:
+        for name in namelist:
             # 删除对应id的记录
-            mod.get(product_id=id).delete()
+            name=name.strip().split('/')[0]
+            print('ttt',name)
+            mod.get(name=name).delete()
         context = {"info": "删除成功"}
     except Exception as res:
         context = {"info": str(res)}

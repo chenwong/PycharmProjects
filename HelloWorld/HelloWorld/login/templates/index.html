@@ -78,7 +78,7 @@
                   <th scope="col">#</th>
                   <th scope="col">项目名称</th>
                   <th scope="col">项目主要内容</th>
-                  <th scope="col">项目进展</th>
+                  <th scope="col">项目进度</th>
                 </tr>
               </thead>
               <tbody id="project_info">
@@ -134,7 +134,7 @@
                     <th scope="col">#</th>
                     <th scope="col">项目名称</th>
                     <th scope="col">项目主要内容</th>
-                    <th scope="col">项目进展</th>
+                    <th scope="col">项目进度</th>
                     <th scope="col">项目创建时间</th>
                   </tr>
                 </thead>
@@ -154,7 +154,7 @@
                   <th scope="col">id</th>
                   <th scope="col">项目名称</th>
                   <th scope="col">项目主要内容</th>
-                  <th scope="col">项目进展</th>
+                  <th scope="col">项目进度</th>
                 </tr>
               </thead>
               <tbody id="project_infos">
@@ -196,7 +196,7 @@
           success:function (res) {
             //window.alert(res);
             for(var i=0;i<res.length;i++){
-              $('#project_info').append("<tr><th scope='row'>"+ i +"</th><th>" + res[i][0] + "</th><th>" + res[i][1] + "</th><th>" + res[i][2] +"</tr>");
+              $('#project_info').append("<tr><th scope='row'>"+ i +"</th><th>" + res[i][0] + "</th><th>" + res[i][1] + "</th><th>" + res[i][2] +"%</th></tr>");
 
             }
             var myPara = document.getElementById("ttt");
@@ -278,7 +278,7 @@
             success:function (res) {
               //window.alert(res);
               for(var i=0;i<res.length;i++){
-                $('#search_res').append("<tr><th scope='row'>"+ i +"</th><th>" + res[i][0] + "</th><th>" + res[i][1] + "</th><th>" + res[i][2] + "</th><th>" + res[i][3] + "</tr>");
+                $('#search_res').append("<tr><th scope='row'>"+ i +"</th><th>" + res[i][0] + "</th><th>" + res[i][1] + "</th><th>" + res[i][2] + "%</th><th>" + res[i][3] + "</th></tr>");
               }
             },
             error: function(data) {
@@ -307,10 +307,10 @@
               success:function (res) {
                 //window.alert(res);
                 for(var i=0;i<res.length;i++){
-                  $('#project_infos').append("<tr><th><input type='checkbox' class='checkOne' check_id=" + i + "/></th><th>"+ i +"</th><th>" + res[i][0] + "</th><th>" + res[i][1] + "</th><th>" + res[i][2] +"</tr>");
+                  $('#project_infos').append("<tr><th><input type='checkbox' class='checkOne' check_name=" + res[i][0] + "/></th><th>"+ i +"</th><th>" + res[i][0] + "</th><th>" + res[i][1] + "</th><th>" + res[i][2] +"%</tr>");
 
                 }
-                $('#to-do').append("<div style='text-align: center;'><button name='revise' value='revise' onclick='revise()'>修改</button><button name='delete' value='delete' onclick='delete()'>删除</button></div>");
+                $('#to-do').append("<div style='text-align: center;'><button name='revise' value='revise' onclick='reviseProject()'>修改</button><button name='delete' value='delete' onclick='deleteProject()'>删除</button></div>");
               },
               error: function(data) {
                 // 处理请求失败的情况
@@ -320,32 +320,34 @@
 
     }
 
-    function delete(){
+    function deleteProject(){
           // 创建数组类型，用于接收被选中的复选框的id
-          var ids = [];
+          var names = [];
           // 遍历被选中的复选框，'.checkOne:checked'说明复选框被选中
           $.each($('.checkOne:checked'),function () {
               // 获取复选框对应的自增序列id或者唯一主键
-              id = $(this).attr("check_id");
+              name = $(this).attr("check_name");
               // 将获取到的id写入到数组中
-              ids.push(id)
+              names.push(name)
           });
 
-           if(ids.length != 0){
+           if(names.length != 0){
               if(confirm("确定删除吗？")){
                   $.ajax({
-                  url:"deleteProductByIdList/",
-                  type:"get",
-                  data:{"ids":ids},
-                  success:function(result){
-                      alert(result.msg.info);
-                  }
-                });
+                    url:"/deleteProjectByNameList/",
+                    type:"get",
+                    data:{"names":names},
+                    success:function(result){
+                        alert(result.msg.info);
+                        location.reload();
+                    }
+                   });
                 }
-              }else {
-                  alert('请选择至少一条数据！');
-              }
-              }
+           }
+           else{
+                alert('请选择至少一条数据！');
+           }
+    }
 
 
   </script>
