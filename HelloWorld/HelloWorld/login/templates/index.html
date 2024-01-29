@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <title>Bootstrap Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body class="p-3 m-0 border-0 bd-example bg-body-secondary">
+
+    <!-- Example Code -->
+
+    <div class="accordion accordion-flush" id="accordionFlushExample" style="width: 400px;float:left;">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" onclick="showDiv()">
+            欢迎页面
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample" style="">
+          <div class="accordion-body">欢迎使用HP项目管理系统.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingTwo">
+          <button id="list" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo" onclick="listDiv()">
+            项目总览
+          </button>
+        </h2>
+        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">展示项目的总体情况.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree" onclick="searchDiv()">
+            查询项目信息
+          </button>
+        </h2>
+        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">根据需要查询项目信息，包括项目名称，项目内容，截止时间等.查询到项目信息后，可以进行修改和删除</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingThreeFour">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour" onclick="addDiv()">
+            添加项目
+          </button>
+        </h2>
+        <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">根据需要添加项目，包括项目名称，具体内容，截止时间等.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingFive">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseThree" onclick="reviseDiv()">
+            修改、删除项目
+          </button>
+        </h2>
+        <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">根据实际情况进行项目修改、删除.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 显示详情 -->
+    <div class="container" id="welcomeDiv" style="width: 1000px;float:right; display: '';">
+      <img src="../static/content/image/1.jpeg" class="img-thumbnail" alt="...">
+    </div>
+
+    <div class="container" id="listDiv" style="width: 1000px;float:right; display: none;">
+        <div class="col">
+            <table class="table" id="mytable" bgcolor="#bada55">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">项目名称</th>
+                  <th scope="col">项目主要内容</th>
+                  <th scope="col">项目进展</th>
+                </tr>
+              </thead>
+              <tbody id="project_info">
+              </tbody>
+            </table>
+            <p id="ttt"></p>
+        </div>
+</div>
+
+    <div class="container" id="addDiv" style="width: 900px;float:right;display: none;">
+            <div class="col">
+                <form class="form-register" action="/addProject-post/" method="post">
+                    {% if message %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+
+                  {% csrf_token %}
+                  <h3 class="text-center">添加项目</h3>
+                  <div  class="form-group">
+                    <label for="id_projectname">项目名称：</label>
+                    <input type="text" name='projectname' class="form-control" id="id_projectname" placeholder="Project Name" autofocus required>
+                  </div>
+                  <div class="form-group">
+                    <label for="id_content">项目主要内容：</label>
+                    <textarea type="text" name='content' class="form-control" id="id_content" placeholder="Content" required></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="id_progress">项目进度：</label>
+                    <input type="text" name='progress' class="form-control" id="id_progress" placeholder="Project progress" required>
+                  </div>
+                  <div>
+                  <button type="submit" class="btn btn-primary float-right" style="display:block;margin-top:10px;">提交</button>
+                  </div>
+                </form>
+            </div>
+    </div>
+
+    <div class="container" id="searchDiv" style="width: 600px;float:right;margin-top:50px;margin-right:200px;display: none;">
+            <div class="col">
+                <form class="search" id="search" >
+                    {% if message %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+
+                  {% csrf_token %}
+                  <h3 class="text-center">搜索项目</h3>
+                  <input type="text" name='project-name' class="form-control" id="id_search_by_name" placeholder="请输入项目名称" required>
+                  <button type="button" onclick="getProjectInfo()" style="display:block;float:right;margin-top:10px;margin-right:250px;">提交</button>
+                </form>
+              <table class="table" id="search_res_table" bgcolor="#bada55" style="display:none;">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">项目名称</th>
+                    <th scope="col">项目主要内容</th>
+                    <th scope="col">项目进展</th>
+                    <th scope="col">项目创建时间</th>
+                  </tr>
+                </thead>
+                <tbody id="search_res">
+                </tbody>
+              </table>
+            </div>
+
+    </div>
+
+    <div class="container" id="reviseDiv" style="width: 800px;float:right;margin-right:150px;display: none;">
+      <div class="col">
+            <table class="table" id="table" bgcolor="#bada55">
+              <thead>
+                <tr>
+                  <th scope="col"><input type="checkbox" id="checkAll"/></th>
+                  <th scope="col">id</th>
+                  <th scope="col">项目名称</th>
+                  <th scope="col">项目主要内容</th>
+                  <th scope="col">项目进展</th>
+                </tr>
+              </thead>
+              <tbody id="project_infos">
+              </tbody>
+            </table>
+      </div>
+      <div class="col" id="to-do">
+      </div>
+
+    </div>
+
+    <!-- End Example Code -->
+  </body>
+  <script>
+    function showDiv() {
+      document.getElementById('welcomeDiv').style.display = "";
+      document.getElementById('listDiv').style.display = "none";
+      document.getElementById('addDiv').style.display = "none";
+      document.getElementById('searchDiv').style.display = "none";
+      document.getElementById('reviseDiv').style.display = "none";
+    }
+
+    function listDiv(){
+      document.getElementById('welcomeDiv').style.display = "none";
+      document.getElementById('listDiv').style.display = "";
+      document.getElementById('addDiv').style.display = "none";
+      document.getElementById('searchDiv').style.display = "none";
+      document.getElementById('reviseDiv').style.display = "none";
+
+
+      $.ajax({
+          url:'/project/',
+          beforeSend :function(xmlHttp){  // deforeSend 是请求前清除缓存  ，如果没有缓存也不使用beforeSend
+            $('#project_info').empty();
+          } ,
+          type:'get',
+          data:{
+          },
+          success:function (res) {
+            //window.alert(res);
+            for(var i=0;i<res.length;i++){
+              $('#project_info').append("<tr><th scope='row'>"+ i +"</th><th>" + res[i][0] + "</th><th>" + res[i][1] + "</th><th>" + res[i][2] +"</tr>");
+
+            }
+            var myPara = document.getElementById("ttt");
+            myPara.innerHTML = "共有项目" + res.length + "个";
+          },
+          error: function(data) {
+            // 处理请求失败的情况
+            alert('POST请求失败！');
+          }
+      });
+
+    }
+
+    function addDiv(){
+          document.getElementById('welcomeDiv').style.display = "none";
+          document.getElementById('listDiv').style.display = "none";
+          document.getElementById('addDiv').style.display = "";
+          document.getElementById('searchDiv').style.display = "none";
+          document.getElementById('reviseDiv').style.display = "none";
+    }
+
+    function searchDiv(){
+          document.getElementById('welcomeDiv').style.display = "none";
+          document.getElementById('listDiv').style.display = "none";
+          document.getElementById('addDiv').style.display = "none";
+          document.getElementById('searchDiv').style.display = "";
+          document.getElementById('reviseDiv').style.display = "none";
+    }
+
+      function checkNull(){
+          	var name = $("#id_search_by_name").val();
+          	if(name == null || name == ''){
+          	  alert("查询字段不能为空");
+          	  return false;
+          	}
+          	return true;
+      }
+
+    // using jQuery
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function getProjectInfo(){
+          if (checkNull()== false){
+            return false;
+           }
+          document.getElementById('search_res_table').style.display = "";
+
+          //window.alert('oo');
+          const csrf_token = getCookie('csrftoken');
+          var name = $("#id_search_by_name").val();
+
+          $.ajax({
+            url:'/searchProject/',
+            beforeSend :function(xmlHttp){  // deforeSend 是请求前清除缓存  ，如果没有缓存也不使用beforeSend
+              $('#search_res').empty();
+            } ,
+            headers: {
+              "X-CSRFToken": csrf_token
+            },
+            type:'POST',
+            data: {
+              'name': name
+            },
+            cache:false,
+            success:function (res) {
+              //window.alert(res);
+              for(var i=0;i<res.length;i++){
+                $('#search_res').append("<tr><th scope='row'>"+ i +"</th><th>" + res[i][0] + "</th><th>" + res[i][1] + "</th><th>" + res[i][2] + "</th><th>" + res[i][3] + "</tr>");
+              }
+            },
+            error: function(data) {
+              // 处理请求失败的情况
+              alert('POST请求失败！');
+            }
+      });
+    }
+
+     function reviseDiv(){
+          document.getElementById('welcomeDiv').style.display = "none";
+          document.getElementById('listDiv').style.display = "none";
+          document.getElementById('addDiv').style.display = "none";
+          document.getElementById('searchDiv').style.display = "none";
+          document.getElementById('reviseDiv').style.display = "";
+
+          $.ajax({
+              url:'/project/',
+              beforeSend :function(xmlHttp){  // deforeSend 是请求前清除缓存  ，如果没有缓存也不使用beforeSend
+                $('#project_infos').empty();
+                $('#to-do').empty();
+              } ,
+              type:'get',
+              data:{
+              },
+              success:function (res) {
+                //window.alert(res);
+                for(var i=0;i<res.length;i++){
+                  $('#project_infos').append("<tr><th><input type='checkbox' class='checkOne' check_id=" + i + "/></th><th>"+ i +"</th><th>" + res[i][0] + "</th><th>" + res[i][1] + "</th><th>" + res[i][2] +"</tr>");
+
+                }
+                $('#to-do').append("<div style='text-align: center;'><button name='revise' value='revise' onclick='revise()'>修改</button><button name='delete' value='delete' onclick='delete()'>删除</button></div>");
+              },
+              error: function(data) {
+                // 处理请求失败的情况
+                alert('POST请求失败！');
+              }
+          });
+
+    }
+
+    function delete(){
+          // 创建数组类型，用于接收被选中的复选框的id
+          var ids = [];
+          // 遍历被选中的复选框，'.checkOne:checked'说明复选框被选中
+          $.each($('.checkOne:checked'),function () {
+              // 获取复选框对应的自增序列id或者唯一主键
+              id = $(this).attr("check_id");
+              // 将获取到的id写入到数组中
+              ids.push(id)
+          });
+
+           if(ids.length != 0){
+              if(confirm("确定删除吗？")){
+                  $.ajax({
+                  url:"deleteProductByIdList/",
+                  type:"get",
+                  data:{"ids":ids},
+                  success:function(result){
+                      alert(result.msg.info);
+                  }
+                });
+                }
+              }else {
+                  alert('请选择至少一条数据！');
+              }
+              }
+
+
+  </script>
+<script src="/static/jquery-3.3.1.min.js"></script>
+
+</html>
