@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改项目</title>
+</head>
+<body>
+    <div class="container">
+            <div class="col">
+                <form class="form-register" action="/reviseProject-post/" method="post">
+                    {% if message %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+
+                  {% csrf_token %}
+                  <h3 class="text-center">修改项目</h3>
+                  <div  class="form-group">
+                    <label for="id_projectname">项目名称：</label>
+                    <input type="text" name='name' class="form-control" id="id_projectname" placeholder="Project Name" value="{{ context.name }}" autofocus required>
+                  </div>
+                  <div class="form-group">
+                    <label for="id_content">项目主要内容：</label>
+                    <input type="text" name='content' class="form-control" id="id_content" placeholder="Content" value="{{ context.name }}" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="id_progress">项目进度：</label>
+                    <input type="text" name='progress' class="form-control" id="id_progress" placeholder="Project progress" value="{{ context.name }}" required>
+                  </div>
+                  <div>
+                  <button type="submit" class="btn btn-primary float-right">提交</button>
+                  </div>
+                </form>
+            </div>
+    </div> <!-- /container -->
+
+</body>
+</html>

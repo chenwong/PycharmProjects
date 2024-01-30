@@ -63,6 +63,11 @@
           <div class="accordion-body">根据实际情况进行项目修改、删除.</div>
         </div>
       </div>
+      {% if request.session.user_name %}
+      <div style="width: 200px;margin-top:10px;float:left"><h4 style='font-family:楷体;'> welcome, {{ request.session.user_name }}</h4></div>
+      {% endif %}
+      <div class="accordion accordion-flush" style="width: 100px;margin-top:10px;float:left;"><button type="submit" onclick="logout()">退出登录</button></div>
+
     </div>
 
     <!-- 显示详情 -->
@@ -169,6 +174,23 @@
     <!-- End Example Code -->
   </body>
   <script>
+
+    function logout(){
+          $.ajax({
+          url:'/logout/',
+          type:'get',
+          data:{
+          },
+          success:function (res) {
+            window.alert('登出成功');
+          },
+          error: function(data) {
+            // 处理请求失败的情况
+            alert('POST请求失败！');
+          }
+      });
+    }
+
     function showDiv() {
       document.getElementById('welcomeDiv').style.display = "";
       document.getElementById('listDiv').style.display = "none";
@@ -347,6 +369,36 @@
            else{
                 alert('请选择至少一条数据！');
            }
+    }
+
+    function reviseProject(){
+          // 创建数组类型，用于接收被选中的复选框的id
+          var names = [];
+          // 遍历被选中的复选框，'.checkOne:checked'说明复选框被选中
+          $.each($('.checkOne:checked'),function () {
+              // 获取复选框对应的自增序列id或者唯一主键
+              name = $(this).attr("check_name");
+              // 将获取到的id写入到数组中
+              names.push(name)
+          });
+
+           if(names.length != 0){
+              if(confirm("确定修改吗？")){
+                  $.ajax({
+                    url:"/reviseProjectByName/",
+                    type:"get",
+                    data:{"name":names[0]},
+                    success:function(result){
+                       // alert(result.msg.info);
+                       // location.reload();
+                    }
+                   });
+                }
+           }
+           else{
+                alert('请选择至少一条数据！');
+           }
+
     }
 
 

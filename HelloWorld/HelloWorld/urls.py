@@ -33,5 +33,7 @@ urlpatterns = [
     path("project/", views.project),
     path("searchProject/", views.search_post),
     path("deleteProjectByNameList/", views.delete_post),
+    path("reviseProjectByName/", views.revise_project),
+    path("reviseProject-post/", views.revise_project_post),
     path('admin/', admin.site.urls),
 ]
