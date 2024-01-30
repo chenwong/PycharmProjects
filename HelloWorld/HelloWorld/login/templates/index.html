@@ -64,7 +64,7 @@
         </div>
       </div>
       {% if request.session.user_name %}
-      <div style="width: 200px;margin-top:10px;float:left"><h4 style='font-family:楷体;'> welcome, {{ request.session.user_name }}</h4></div>
+      <div style="width: 200px;margin-top:10px;float:left"><h4 style='font-family:楷体;'> 欢迎登陆, {{ request.session.user_name }}</h4></div>
       {% endif %}
       <div class="accordion accordion-flush" style="width: 100px;margin-top:10px;float:left;"><button type="submit" onclick="logout()">退出登录</button></div>
 
@@ -176,19 +176,7 @@
   <script>
 
     function logout(){
-          $.ajax({
-          url:'/logout/',
-          type:'get',
-          data:{
-          },
-          success:function (res) {
-            window.alert('登出成功');
-          },
-          error: function(data) {
-            // 处理请求失败的情况
-            alert('POST请求失败！');
-          }
-      });
+          window.location = '/login'
     }
 
     function showDiv() {
@@ -384,15 +372,7 @@
 
            if(names.length != 0){
               if(confirm("确定修改吗？")){
-                  $.ajax({
-                    url:"/reviseProjectByName/",
-                    type:"get",
-                    data:{"name":names[0]},
-                    success:function(result){
-                       // alert(result.msg.info);
-                       // location.reload();
-                    }
-                   });
+                  window.location = '/reviseProjectByName'
                 }
            }
            else{

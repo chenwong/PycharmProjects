@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <title>修改项目</title>
 </head>
 <body>
@@ -16,15 +17,15 @@
                   <h3 class="text-center">修改项目</h3>
                   <div  class="form-group">
                     <label for="id_projectname">项目名称：</label>
-                    <input type="text" name='name' class="form-control" id="id_projectname" placeholder="Project Name" value="{{ context.name }}" autofocus required>
+                    <input type="text" name='name' class="form-control" id="id_projectname" placeholder="Project Name" value="" autofocus required>
                   </div>
                   <div class="form-group">
                     <label for="id_content">项目主要内容：</label>
-                    <input type="text" name='content' class="form-control" id="id_content" placeholder="Content" value="{{ context.name }}" required>
+                    <input type="text" name='content' class="form-control" id="id_content" placeholder="Content" value="" required>
                   </div>
                   <div class="form-group">
                     <label for="id_progress">项目进度：</label>
-                    <input type="text" name='progress' class="form-control" id="id_progress" placeholder="Project progress" value="{{ context.name }}" required>
+                    <input type="text" name='progress' class="form-control" id="id_progress" placeholder="Project progress" value="" required>
                   </div>
                   <div>
                   <button type="submit" class="btn btn-primary float-right">提交</button>
@@ -34,4 +35,7 @@
     </div> <!-- /container -->
 
 </body>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.15.0/umd/popper.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </html>

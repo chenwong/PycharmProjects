@@ -48,12 +48,14 @@ def login_post(request):
             return render(request, '/login', {'message': message})
     return render(request, '/login')
 
+
 def logout(request):
     if not request.session.get('is_login', None):
-        # 如果本来就未登录，也就没有登出一说
+        # 如果本来就未登录,直接跳转到登陆界面
         return render(request, 'login.html')
     request.session.flush()
     return render(request, 'login.html')
+
 
 def register(request):
     pass
@@ -98,7 +100,7 @@ def register_post(request):
 
 
 def addProject_post(request):
-    if request.session.get('is_login', None):
+    if not request.session.get('is_login'):
         return redirect('/index/')
 
     if request.method == 'POST':
@@ -117,7 +119,7 @@ def addProject_post(request):
         new_user.name = projectname
         new_user.content = content
         new_user.progress = progress
-        new_user.user_id = 3
+        new_user.user_id = request.session.get('user_id')
         new_user.save()
 
         return render(request, 'succeed.html', locals())
@@ -166,27 +168,24 @@ def delete_post(request):
 
 
 def revise_project(request):
-    update_obj = models.Project.objects.get(name='a')
-    context = {"name": 'a'}
-    #return JsonResponse({"msg": context})
+    return render(request, 'project_revise.html')
 
-    return render(request, 'project_revise.html', context=context)
 
 def revise_project_post(request):
+    message = '操作失败，请重新输入！'
+    try:
+        if request.method == 'POST':
+            new_name = request.POST.get('name')
+            new_content = request.POST.get('content')
+            new_progress = request.POST.get('progress')
+            # 找到匹配的项
+            update_obj = models.Project.objects.get(name=new_name)
+            # 取出内容和进度对应
+            update_obj.content = new_content
+            update_obj.progress = new_progress
 
-    name = request.GET.get('name')
-    if request.method == 'POST':
-        new_name = request.POST.get('name')
-        new_content = request.POST.get('content')
-        new_progress = request.POST.get('progress')
-        # 找到匹配的项
-        update_obj = models.Project.objects.get(name=new_name)
-        # 取出内容和进度对应
-        update_obj.content = new_content
-        update_obj.progress = new_progress
-
-        # 保存数据库
-        update_obj.save()
-        return redirect('/index/')
-    ret = models.User.objects.get(name=name)
-    return render(request, 'update_user.html', {'ret': ret})
+            # 保存数据库
+            update_obj.save()
+            return redirect('/index/')
+    except:
+        return render(request, 'project_revise.html', {'message': message})
