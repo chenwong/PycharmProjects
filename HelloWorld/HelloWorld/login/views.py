@@ -127,7 +127,8 @@ def addProject_post(request):
         return render(request, 'failed.html', locals())
 
 
-def project(request):
+def list_project(request):
+    # 获取所有项目信息
     res = []
     data = models.Project.objects.all().values_list('name', 'content', 'progress')
     # print(data)

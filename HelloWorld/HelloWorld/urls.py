@@ -30,7 +30,7 @@ urlpatterns = [
     path("login-post/", views.login_post),
     path("register-post/", views.register_post),
     path("addProject-post/", views.addProject_post),
-    path("project/", views.project),
+    path("listProject/", views.list_project),
     path("searchProject/", views.search_post),
     path("deleteProjectByNameList/", views.delete_post),
     path("reviseProjectByName/", views.revise_project),

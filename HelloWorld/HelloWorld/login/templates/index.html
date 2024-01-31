@@ -196,7 +196,7 @@
 
 
       $.ajax({
-          url:'/project/',
+          url:'/listProject/',
           beforeSend :function(xmlHttp){  // deforeSend 是请求前清除缓存  ，如果没有缓存也不使用beforeSend
             $('#project_info').empty();
           } ,
@@ -306,7 +306,7 @@
           document.getElementById('reviseDiv').style.display = "";
 
           $.ajax({
-              url:'/project/',
+              url:'/listProject/',
               beforeSend :function(xmlHttp){  // deforeSend 是请求前清除缓存  ，如果没有缓存也不使用beforeSend
                 $('#project_infos').empty();
                 $('#to-do').empty();
