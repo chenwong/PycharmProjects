@@ -1,1 +1,1 @@
-here are some python programs,including data analysis and CN programs.
+Here are some python programs,focus on Douban data analysis.
